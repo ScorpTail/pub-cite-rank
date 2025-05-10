@@ -19,6 +19,8 @@ class Category extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'name'
+        'name',
+        'parent_id',
+        'openalex_concept_id'
     ];
 }
