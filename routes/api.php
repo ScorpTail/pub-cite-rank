@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\Auth\AuthController;
 
 Route::group(['controller' => AuthController::class, 'as' => 'auth.'], function () {
     Route::group(['middleware' => 'guest:sanctum'], function () {
@@ -28,4 +30,15 @@ Route::group(['controller' => UserController::class, 'middleware' => ['auth:sanc
 Route::group(['controller' => AuthorController::class, 'middleware' => [], 'as' => 'author.', 'prefix' => 'authors'], function () {
     Route::get('', 'index')->name('index');
     Route::get('{authorId}', 'show')->name('show');
+});
+
+Route::group(['controller' => CategoryController::class, 'middleware' => [], 'as' => 'category.', 'prefix' => 'categories'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('{categoryId}', 'show')->name('show');
+});
+
+Route::get('call', function () {
+    return Artisan::call('app:import-openalex', [
+        'type' => request('type', 'works'),
+    ]);
 });

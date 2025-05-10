@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Category;
+namespace App\Http\Requests\Api\Admin\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +22,9 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'unique:categories,name,' . $this->route('categoryId')],
+            'parent_id' => ['nullable', 'exists:categories,id'],
+            'openalex_concept_id' => ['nullable', 'string', 'max:255'],
         ];
     }
 }
