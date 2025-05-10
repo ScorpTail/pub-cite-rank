@@ -3,47 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Author\AuthorResource;
+use App\Services\AuthorServices\AuthorService;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    public function __construct(
+        public AuthorService $authorService,
+    ) {}
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $authors = $this->authorService->author();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return AuthorResource::collection($authors);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, int $authorId)
     {
-        //
-    }
+        $author = $this->authorService->author($authorId);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return AuthorResource::make($author);
     }
 }
