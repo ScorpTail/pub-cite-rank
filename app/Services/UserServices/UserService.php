@@ -12,26 +12,34 @@ class UserService
         public UserRepository $userRepository,
     ) {}
 
-    public function update(array $data)
+    public function user(array $param = [], ?int $userId = null)
     {
-        $user = auth()->user();
+        return $userId
+            ? $this->userRepository->getUser($userId, $param)
+            : $this->userRepository->getUsers($param);
+    }
 
+    public function create(array $data)
+    {
+        $user = $this->userRepository->createUser($data);
+
+        return $user;
+    }
+
+    public function update(User $user, array $data)
+    {
         $this->userRepository->updateUser($user, $data);
 
         return $user;
     }
 
-    public function delete()
+    public function delete(User $user)
     {
-        $user = auth()->user();
-
         $this->userRepository->deleteUser($user);
     }
 
-    public function updateAvatar($avatar)
+    public function updateAvatar(User $user, $avatar)
     {
-        $user = auth()->user();
-
         if ($user->mainImage) {
             Image::deleteImage($user->mainImage);
         }

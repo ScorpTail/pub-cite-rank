@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request)
     {
-        $this->userService->update($request->validated());
+        $this->userService->update(auth()->user(), $request->validated());
 
         return response()->json(['success' => __('front.success.cabinet.update')]);
     }
@@ -40,7 +40,7 @@ class UserController extends Controller
 
     public function updateAvatar(UserUpdateAvatarRequest $request)
     {
-        $this->userService->updateAvatar($request->validated('file'));
+        $this->userService->updateAvatar(auth()->user(), $request->validated('file'));
 
         return response()->json(['success' => __('front.success.cabinet.update_avatar')]);
     }

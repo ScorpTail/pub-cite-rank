@@ -7,6 +7,29 @@ use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
+    public function getUsers(array $param = [])
+    {
+        $query = User::query();
+
+        return $query->get();
+    }
+
+    public function getUser(int $userId, array $param = [])
+    {
+        $query = User::query();
+
+        $query->where('id', $userId);
+
+        return $query->first();
+    }
+
+    public function createUser(array $data)
+    {
+        return DB::transaction(function () use ($data) {
+            return User::create($data);
+        });
+    }
+
     public function updateUser(User $user, array $data)
     {
         return DB::transaction(function () use ($user, $data) {
