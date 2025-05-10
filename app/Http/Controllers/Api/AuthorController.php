@@ -17,7 +17,7 @@ class AuthorController extends Controller
      */
     public function index(Request $request)
     {
-        $authors = $this->authorService->author();
+        $authors = $this->authorService->author($request->query());
 
         return AuthorResource::collection($authors);
     }
@@ -27,7 +27,7 @@ class AuthorController extends Controller
      */
     public function show(Request $request, int $authorId)
     {
-        $author = $this->authorService->author($authorId);
+        $author = $this->authorService->author($authorId, $request->query());
 
         return AuthorResource::make($author);
     }

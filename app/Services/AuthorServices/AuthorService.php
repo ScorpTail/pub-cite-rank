@@ -6,20 +6,26 @@ use App\Models\Author;
 
 class AuthorService
 {
-    public function author(?int $authorId = null)
+    public function author(?int $authorId = null, array $param = [])
     {
         return $authorId
             ? $this->getAuthor($authorId)
             : $this->getAuthors();
     }
 
-    public function getAuthors()
+    public function getAuthors(array $param = [])
     {
-        return Author::all();
+        $query = Author::query();
+
+        return $query->get();
     }
 
-    public function getAuthor(int $authorId)
+    public function getAuthor(int $authorId, array $param = [])
     {
-        return Author::findOrFail($authorId);
+        $query = Author::query();
+
+        $query->where('id', $authorId);
+
+        return $query->first();
     }
 }
