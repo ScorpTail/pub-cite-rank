@@ -22,7 +22,6 @@ class Journal extends Model
         'name',
         'type',
         'issn',
-        'publisher',
         'impact_factor',
         'openalex_id'
     ];

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Api\Journal;
+namespace App\Http\Requests\Api\Admin\Journal;
 
+use App\Enums\Journal\JournalTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class JournalRequest extends FormRequest
@@ -11,7 +12,7 @@ class JournalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check() && auth()->user()->can('journal_create');
     }
 
     /**
@@ -22,7 +23,10 @@ class JournalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'in:' . JournalTypeEnum::getColumnLikeString('value')],
+            'issn' => ['sometimes'],
+            'impact_factor' => ['sometimes', 'numeric'],
         ];
     }
 }

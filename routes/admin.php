@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\Admin\AuthorController;
-use App\Http\Controllers\Api\Admin\CategoryController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Admin\AuthorController;
+use App\Http\Controllers\Api\Admin\JournalController;
+use App\Http\Controllers\Api\Admin\CategoryController;
 
 Route::group(['controller' => UserController::class, 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('', 'index')->name('index');
@@ -36,4 +37,12 @@ Route::group(['controller' => AuthorController::class, 'prefix' => 'author', 'as
     Route::post('/', 'store')->name('store');
     Route::put('/{authorId}', 'update')->name('update');
     Route::delete('/{authorId}', 'destroy')->name('destroy');
+});
+
+Route::group(['controller' => JournalController::class, 'prefix' => 'journal', 'as' => 'journal.'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('/{journalId}', 'show')->name('show');
+    Route::post('/', 'store')->name('store');
+    Route::put('/{journalId}', 'update')->name('update');
+    Route::delete('/{journalId}', 'destroy')->name('destroy');
 });
