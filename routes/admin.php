@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,4 +19,12 @@ Route::group(['controller' => RoleController::class, 'prefix' => 'role', 'as' =>
     Route::get('/{roleId}', 'show')->name('show');
     Route::put('/{roleId}', 'update')->name('update');
     Route::delete('/{roleId}', 'destroy')->name('destroy');
+});
+
+Route::group(['controller' => CategoryController::class, 'prefix' => 'category', 'as' => 'category.'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('/{categoryId}', 'show')->name('show');
+    Route::post('/', 'store')->name('store');
+    Route::put('/{categoryId}', 'update')->name('update');
+    Route::delete('/{categoryId}', 'destroy')->name('destroy');
 });
