@@ -32,7 +32,7 @@ Route::group(['controller' => AuthorController::class, 'middleware' => [], 'as' 
     Route::get('{authorId}', 'show')->name('show');
 });
 
-Route::group(['controller' => CategoryController::class, 'middleware' => [], 'as' => 'category.', 'prefix' => 'categories'], function () {
+Route::group(['controller' => CategoryController::class, 'middleware' => [], 'as' => 'category.', 'prefix' => 'category'], function () {
     Route::get('', 'index')->name('index');
     Route::get('{categoryId}', 'show')->name('show');
 });
