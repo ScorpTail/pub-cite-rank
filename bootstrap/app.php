@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware('admin')
+            Route::middleware(['auth', 'admin'])
                 ->prefix('api/admin')
                 ->as('admin.')
                 ->group(base_path('routes/admin.php'));
@@ -27,6 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
             'guest' => GuestMiddleware::class,
             'auth.optional' => OptionalAuthMiddleware::class,
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         ]);
         $middleware->statefulApi();
 

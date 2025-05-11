@@ -51,9 +51,7 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, string $roleId)
     {
-        $role = $this->roleService->role([], $roleId);
-
-        $this->roleService->update($role, $request->validated());
+        $this->roleService->update($roleId, $request->validated());
 
         return response()->json([
             'success' => __('admin.role.updated'),

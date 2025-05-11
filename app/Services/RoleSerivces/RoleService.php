@@ -35,9 +35,7 @@ class RoleService
         return DB::transaction(function () use ($data) {
             $role = Role::create($data);
 
-            if (isset($data['permissions'])) {
-                $role->syncPermissions($data['permissions']);
-            }
+            $role->syncPermissions($data['permissions'] ?? []);
         });
     }
 
