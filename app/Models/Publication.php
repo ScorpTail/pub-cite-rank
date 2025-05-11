@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Publication extends Model
 {
@@ -24,7 +25,6 @@ class Publication extends Model
         'title',
         'published_at',
         'journal_id',
-        'category_id',
         'citation_count',
         'doi',
         'openalex_id'
@@ -43,10 +43,10 @@ class Publication extends Model
     /**
      * Get the category that owns the Publication
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function category(): BelongsTo
+    public function category(): BelongsToMany
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsToMany(Category::class, 'publication_categories', 'publication_id', 'category_id');
     }
 }
