@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\AuthorController;
 use App\Http\Controllers\Api\Admin\JournalController;
 use App\Http\Controllers\Api\Admin\CategoryController;
+use App\Http\Controllers\Api\Admin\WeightController;
 
 Route::group(['controller' => UserController::class, 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('', 'index')->name('index');
@@ -45,4 +46,12 @@ Route::group(['controller' => JournalController::class, 'prefix' => 'journal', '
     Route::post('/', 'store')->name('store');
     Route::put('/{journalId}', 'update')->name('update');
     Route::delete('/{journalId}', 'destroy')->name('destroy');
+});
+
+Route::group(['controller' => WeightController::class, 'prefix' => 'weight', 'as' => 'weight.'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('/{weightId}', 'show')->name('show');
+    Route::post('/', 'store')->name('store');
+    Route::put('/{weightId}', 'update')->name('update');
+    Route::delete('/{weightId}', 'destroy')->name('destroy');
 });
