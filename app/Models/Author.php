@@ -27,6 +27,7 @@ class Author extends Model
         'last_name',
         'birth_date',
         'about',
+        'orcid',
         'affiliation',
         'openalex_id',
     ];

@@ -12,7 +12,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return auth()->check() && auth()->user()->can('user_create');
     }
 
     /**

@@ -3,10 +3,11 @@
 namespace App\Services\AuthorServices;
 
 use App\Models\Author;
+use Illuminate\Support\Facades\DB;
 
 class AuthorService
 {
-    public function author(?int $authorId = null, array $param = [])
+    public function author(array $param = [], ?int $authorId = null)
     {
         return $authorId
             ? $this->getAuthor($authorId)
@@ -27,5 +28,26 @@ class AuthorService
         $query->where('id', $authorId);
 
         return $query->first();
+    }
+
+    public function create(array $data)
+    {
+        return DB::transaction(function () use ($data) {
+            return Author::create($data);
+        });
+    }
+
+    public function update(string $authorId, array $data)
+    {
+        return DB::transaction(function () use ($authorId, $data) {
+            return Author::where('id', $authorId)->update($data);
+        });
+    }
+
+    public function delete(string $authorId)
+    {
+        return DB::transaction(function () use ($authorId) {
+            return Author::where('id', $authorId)->delete();
+        });
     }
 }

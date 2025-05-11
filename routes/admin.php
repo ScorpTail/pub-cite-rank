@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AuthorController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\UserController;
@@ -27,4 +28,12 @@ Route::group(['controller' => CategoryController::class, 'prefix' => 'category',
     Route::post('/', 'store')->name('store');
     Route::put('/{categoryId}', 'update')->name('update');
     Route::delete('/{categoryId}', 'destroy')->name('destroy');
+});
+
+Route::group(['controller' => AuthorController::class, 'prefix' => 'author', 'as' => 'author.'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('/{authorId}', 'show')->name('show');
+    Route::post('/', 'store')->name('store');
+    Route::put('/{authorId}', 'update')->name('update');
+    Route::delete('/{authorId}', 'destroy')->name('destroy');
 });
