@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             User::create([
                 'first_name' => 'Vlad',
                 'last_name' => 'Danchevskyi',
-                'email' => 'test@example.com',
+                'email' => 'test@gmail.com',
                 'password' => bcrypt('password'),
             ]);
         }
@@ -35,8 +35,8 @@ class DatabaseSeeder extends Seeder
                 'publish_edit',
                 'author_create',
                 'author_edit',
-                'journal_create',
-                'journal_edit',
+                'publisher_create',
+                'publisher_edit',
                 'category_create',
                 'category_edit',
                 'weight_create',

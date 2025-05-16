@@ -24,20 +24,20 @@ class Publication extends Model
     protected $fillable = [
         'title',
         'published_at',
-        'journal_id',
+        'publisher_id',
         'citation_count',
         'doi',
         'openalex_id'
     ];
 
     /**
-     * Get the journal that owns the Publication
+     * Get the publisher that owns the Publication
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function journal(): BelongsTo
     {
-        return $this->belongsTo(Journal::class, 'journal_id', 'id');
+        return $this->belongsTo(Publisher::class, 'publisher_id', 'id');
     }
 
     /**

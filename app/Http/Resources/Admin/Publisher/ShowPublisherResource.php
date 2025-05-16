@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Journal;
+namespace App\Http\Resources\Admin\Publisher;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class JournalResource extends JsonResource
+class ShowPublisherResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

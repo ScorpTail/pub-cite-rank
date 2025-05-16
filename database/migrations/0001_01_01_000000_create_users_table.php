@@ -38,13 +38,6 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-
-        $user = \App\Models\User::create([
-            'first_name' => 'Vlad',
-            'last_name' => 'Danchevskyi',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
-        ]);
     }
 
     /**

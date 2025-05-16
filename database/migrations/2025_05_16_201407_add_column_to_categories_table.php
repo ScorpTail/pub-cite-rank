@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('journals', function (Blueprint $table) {
-            $table->dropColumn([
-                'publisher',
-            ]);
+        Schema::table('categories', function (Blueprint $table) {
+            $table->unsignedBigInteger('level')->index()->default(0);
         });
     }
 
@@ -23,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('journals', function (Blueprint $table) {
-            $table->string('publisher')->nullable();
+        Schema::table('categories', function (Blueprint $table) {
+            //
         });
     }
 };

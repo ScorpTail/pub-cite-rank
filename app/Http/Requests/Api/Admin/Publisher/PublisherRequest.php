@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\Admin\Journal;
+namespace App\Http\Requests\Api\Admin\Publisher;
 
-use App\Enums\Journal\JournalTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class JournalRequest extends FormRequest
+class PublisherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->can('journal_create');
+        return auth()->check() && auth()->user()->can('publisher_create');
     }
 
     /**
@@ -23,10 +22,11 @@ class JournalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:' . JournalTypeEnum::getColumnLikeString('value')],
-            'issn' => ['sometimes'],
-            'impact_factor' => ['sometimes', 'numeric'],
+            'name' => ['required'],
+            'country' => ['required'],
+            'website' => ['required', 'url'],
+            'h_index' => ['required', 'integer'],
+            'openalex_id' => ['required', 'string', 'unique:publishers,openalex_id'],
         ];
     }
 }

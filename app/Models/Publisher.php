@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Journal extends Model
+class Publisher extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'journals';
+    protected $table = 'publishers';
 
     /**
      * The attributes that are mass assignable.
@@ -20,9 +20,9 @@ class Journal extends Model
      */
     protected $fillable = [
         'name',
-        'type',
-        'issn',
-        'impact_factor',
+        'country',
+        'website',
+        'h_index',
         'openalex_id'
     ];
 }

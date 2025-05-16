@@ -21,6 +21,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'parent_id',
-        'openalex_concept_id'
+        'openalex_concept_id',
+        'level',
     ];
 }

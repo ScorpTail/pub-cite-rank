@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('journals', function (Blueprint $table) {
+        Schema::create('publishers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->char('type', 1);
-            $table->string('issn')->nullable();
-            $table->string('publisher')->nullable();
-            $table->decimal('impact_factor', 4, 3);
+            $table->string('country')->nullable();
+            $table->string('website')->nullable();
+            $table->unsignedInteger('h_index')->nullable();
             $table->unsignedBigInteger('openalex_id')->index()->nullable();
 
             $table->timestamps();
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('journals');
+        Schema::dropIfExists('publishers');
     }
 };
