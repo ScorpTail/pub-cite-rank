@@ -2,11 +2,12 @@
 
 namespace App\Services\ImportServices\OpenAlex;
 
-use Illuminate\Support\Str;
-use App\Exceptions\ImportException;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\Publisher;
+use App\Models\Publication;
+use Illuminate\Support\Str;
+use App\Exceptions\ImportException;
 use Illuminate\Support\Facades\Http;
 
 class OpenAlexService
@@ -96,25 +97,118 @@ class OpenAlexService
 
         $publishers = $response->json('results');
 
-        $create = [];
         foreach ($publishers as $publisher) {
-
             $publisherId = Str::after($publisher['id'], 'https://openalex.org/P');
 
-            if (!isset($create[$publisherId])) {
-                $create[$publisherId] = [
+            $localPublisher = Publisher::updateOrCreate(
+                ['openalex_id' => $publisherId],
+                [
                     'name' => $publisher['display_name'] ?? null,
                     'country' => $publisher['country_codes'][0] ?? null,
                     'website' => $publisher['homepage_url'] ?? null,
                     'h_index' => $publisher['summary_stats']['h_index'] ?? null,
-                    'openalex_id' => $publisherId,
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
-                ];
-            }
+                ]
+            );
+
+            $this->importTopWorksForPublisher($publisherId, $localPublisher->id);
+        }
+    }
+
+    private function importTopWorksForPublisher(string $openalexPublisherId, int $localPublisherId): void
+    {
+        $response = $this->request('works', [
+            'filter' => 'host_venue.publisher.id:P' . $openalexPublisherId,
+            'sort' => 'cited_by_count:desc',
+            'per_page' => 20,
+            'page' => 1,
+        ]);
+
+        if ($response->failed()) {
+            return;
         }
 
-        Publisher::insert($create);
+        $works = $response->json('results');
+
+        foreach ($works as $work) {
+            $workId = Str::after($work['id'], 'https://openalex.org/W');
+
+            $publication = Publication::updateOrCreate(
+                ['openalex_id' => $workId],
+                [
+                    'title' => $work['title'] ?? null,
+                    'published_at' => $work['publication_date'] ?? null,
+                    'publisher_id' => $localPublisherId,
+                    'citation_count' => $work['cited_by_count'] ?? 0,
+                    'doi' => $work['doi'] ?? null,
+                ]
+            );
+
+            // Автори
+            if (!empty($work['authorships'])) {
+                foreach ($work['authorships'] as $authorship) {
+                    $authorData = $authorship['author'] ?? [];
+                    if (!isset($authorData['id'])) {
+                        continue;
+                    }
+
+                    $authorId = Str::after($authorData['id'], 'https://openalex.org/A');
+                    $fullName = $authorData['display_name'] ?? null;
+                    $orcid = $authorData['orcid'] ?? null;
+
+                    $affiliation = null;
+                    if (!empty($authorship['institutions'])) {
+                        $affiliation = $authorship['institutions'][0]['display_name'] ?? null;
+                    }
+
+                    // Спрощений поділ імені
+                    $nameParts = explode(' ', $fullName);
+                    $firstName = $nameParts[0] ?? null;
+                    $lastName = count($nameParts) > 1 ? array_pop($nameParts) : null;
+                    $middleName = implode(' ', array_slice($nameParts, 1));
+
+                    $author = Author::updateOrCreate(
+                        ['openalex_id' => $authorId],
+                        [
+                            'first_name' => $firstName,
+                            'middle_name' => $middleName,
+                            'last_name' => $lastName,
+                            'orcid' => $orcid,
+                            'affiliation' => $affiliation,
+                        ]
+                    );
+
+                    $publication->authors()->syncWithoutDetaching([$author->id]);
+                }
+            }
+
+            // Категорії
+            if (!empty($work['concepts'])) {
+                foreach ($work['concepts'] as $concept) {
+                    $conceptId = Str::after($concept['id'], 'https://openalex.org/C');
+                    $name = $concept['display_name'] ?? null;
+                    $level = $concept['level'] ?? null;
+
+                    // Пошук parent_id через перший ancestor
+                    $parentId = null;
+                    if (!empty($concept['ancestors'])) {
+                        $parentOpenalexId = Str::after($concept['ancestors'][0]['id'], 'https://openalex.org/C');
+                        $parent = Category::where('openalex_concept_id', $parentOpenalexId)->first();
+                        $parentId = $parent?->id;
+                    }
+
+                    $category = Category::updateOrCreate(
+                        ['openalex_concept_id' => $conceptId],
+                        [
+                            'name' => $name,
+                            'level' => $level,
+                            'parent_id' => $parentId,
+                        ]
+                    );
+
+                    $publication->categories()->syncWithoutDetaching([$category->id]);
+                }
+            }
+        }
     }
 
     private function importCategories(): void

@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
+
             $table->string('title')->nullable();
             $table->dateTime('published_at')->nullable();
-            $table->unsignedBigInteger('journal_id')->index()->nullable();
-            $table->unsignedBigInteger('category_id')->index()->nullable();
+            $table->unsignedBigInteger('publisher_id')->index()->nullable();
             $table->unsignedBigInteger('citation_count')->nullable();
-            $table->unsignedBigInteger('doi')->index()->nullable();
+            $table->string('doi')->index()->nullable();
             $table->unsignedBigInteger('openalex_id')->index()->nullable();
 
             $table->timestamps();

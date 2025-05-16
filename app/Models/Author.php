@@ -42,6 +42,11 @@ class Author extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function publications()
+    {
+        return $this->belongsToMany(Publication::class, 'author_publications');
+    }
+
     public function getFullNameAttribute()
     {
         return trim("{$this->first_name} {$this->middle_name} {$this->last_name}");

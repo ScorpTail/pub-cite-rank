@@ -24,4 +24,9 @@ class Category extends Model
         'openalex_concept_id',
         'level',
     ];
+
+    public function publications()
+    {
+        return $this->belongsToMany(Publication::class, 'publication_categories');
+    }
 }

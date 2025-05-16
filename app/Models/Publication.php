@@ -30,14 +30,9 @@ class Publication extends Model
         'openalex_id'
     ];
 
-    /**
-     * Get the publisher that owns the Publication
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function journal(): BelongsTo
+    public function authors()
     {
-        return $this->belongsTo(Publisher::class, 'publisher_id', 'id');
+        return $this->belongsToMany(Author::class, 'author_publications');
     }
 
     /**
@@ -45,8 +40,8 @@ class Publication extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function category(): BelongsToMany
+    public function categories()
     {
-        return $this->belongsToMany(Category::class, 'publication_categories', 'publication_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'publication_categories');
     }
 }
