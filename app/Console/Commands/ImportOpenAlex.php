@@ -12,7 +12,7 @@ class ImportOpenAlex extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import-openalex {type=work}';
+    protected $signature = 'app:import-openalex {type=publishers}';
 
     /**
      * The console command description.
@@ -29,7 +29,7 @@ class ImportOpenAlex extends Command
         $start = microtime(true);
         $this->info('Syncing publications...');
 
-        $type = $this->argument('type');
+        $type = $this->argument('type', 'publishers');
         app(OpenAlexService::class)->import($type);
         $end = microtime(true);
         $executionTime = $end - $start;

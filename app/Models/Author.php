@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Author extends Model
@@ -45,6 +46,16 @@ class Author extends Model
     public function publications()
     {
         return $this->belongsToMany(Publication::class, 'author_publications');
+    }
+
+    /**
+     * Get the rank associated with the Author
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rank(): HasOne
+    {
+        return $this->hasOne(AuthorRank::class, 'author_id', 'id');
     }
 
     public function getFullNameAttribute()

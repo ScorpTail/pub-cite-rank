@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
@@ -70,5 +71,9 @@ class DatabaseSeeder extends Seeder
             });
             User::find(1)->assignRole('admin');
         });
+
+        Artisan::call('app:import-openalex', [
+            'type' => 'publishers',
+        ]);
     }
 }
