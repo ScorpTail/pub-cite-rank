@@ -4,7 +4,6 @@ namespace App\Services\AuthServices;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthService
@@ -18,7 +17,8 @@ class AuthService
 
     public function login(array $loginData)
     {
-        return Auth::once($loginData) ? $this->authenticateUser(auth()->user()) : false;
+        $user = User::where('email', $loginData['email'])->first();
+        return $user ? $this->authenticateUser($user) : false;
     }
 
     public function logout()
