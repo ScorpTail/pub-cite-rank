@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\FrontController;
+use App\Http\Controllers\Api\PublicationController;
+use App\Http\Controllers\Api\PublisherController;
 
 Route::group(['controller' => AuthController::class, 'as' => 'auth.'], function () {
     Route::group(['middleware' => 'guest:sanctum'], function () {
@@ -36,6 +38,16 @@ Route::group(['controller' => AuthorController::class, 'middleware' => [], 'as' 
 Route::group(['controller' => CategoryController::class, 'middleware' => [], 'as' => 'category.', 'prefix' => 'category'], function () {
     Route::get('', 'index')->name('index');
     Route::get('{categoryId}', 'show')->name('show');
+});
+
+Route::group(['controller' => PublicationController::class, 'middleware' => [], 'as' => 'publication.', 'prefix' => 'publication'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('{publicationId}', 'show')->name('show');
+});
+
+Route::group(['controller' => PublisherController::class, 'middleware' => [], 'as' => 'publisher.', 'prefix' => 'publisher'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('{publisherId}', 'show')->name('show');
 });
 
 Route::group(['controller' => FrontController::class], function () {
