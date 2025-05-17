@@ -56,7 +56,7 @@ class WeightController extends Controller
         $this->weightService->delete($weightId);
 
         return response()->json([
-            'success' => __('admin.weight.updated'),
+            'success' => __('admin.weight.deleted'),
         ]);
     }
 }
