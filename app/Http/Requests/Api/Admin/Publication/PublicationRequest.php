@@ -28,7 +28,7 @@ class PublicationRequest extends FormRequest
             'category_id' => ['required', 'string', 'max:255', 'exists:categories,id'],
             'citation_count' => ['sometimes', 'string', 'max:255'],
             'doi' => ['sometimes', 'string', 'max:255', 'unique:publications,doi,' . $this->route('publicationId') . ',id'],
-            'openalex_id' => ['sometimes', 'string', 'unique:publications,openalex_id,' . $this->route('publicationId') . ',id'],
+            'openalex_id' => ['sometimes', 'unique:publications,openalex_id,' . $this->route('publicationId') . ',id'],
         ];
     }
 }

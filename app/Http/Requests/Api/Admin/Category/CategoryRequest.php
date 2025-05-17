@@ -24,7 +24,7 @@ class CategoryRequest extends FormRequest
         return [
             'name' => ['required', 'unique:categories,name,' . $this->route('categoryId')],
             'parent_id' => ['nullable', 'exists:categories,id'],
-            'openalex_concept_id' => ['nullable', 'string', 'max:255'],
+            'openalex_concept_id' => ['nullable', 'max:255'],
         ];
     }
 }
