@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PublisherServices\PublisherService;
-use App\Http\Resources\Admin\Author\ShowAuthorResource;
-use App\Http\Resources\Admin\Author\IndexAuthorResource;
 use App\Http\Requests\Api\Admin\Publisher\PublisherRequest;
+use App\Http\Resources\Admin\Publisher\IndexPublisherResource;
+use App\Http\Resources\Admin\Publisher\ShowPublisherResource;
 
 class PublisherController extends Controller
 {
@@ -20,7 +20,7 @@ class PublisherController extends Controller
     {
         $publishers = $this->publisherService->publisher($request->query());
 
-        return IndexAuthorResource::collection($publishers);
+        return IndexPublisherResource::collection($publishers);
     }
 
     /**
@@ -30,7 +30,7 @@ class PublisherController extends Controller
     {
         $publisher = $this->publisherService->publisher($request->query(), $publisherId);
 
-        return ShowAuthorResource::make($publisher);
+        return ShowPublisherResource::make($publisher);
     }
 
     public function store(PublisherRequest $request)
