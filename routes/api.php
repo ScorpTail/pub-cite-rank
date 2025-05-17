@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AuthorController as AdminAuthorController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Api\UserController;
@@ -30,7 +31,7 @@ Route::group(['controller' => UserController::class, 'middleware' => ['auth:sanc
     Route::post('avatar', 'updateAvatar')->name('update.avatar');
 });
 
-Route::group(['controller' => AuthorController::class, 'middleware' => [], 'as' => 'author.', 'prefix' => 'authors'], function () {
+Route::group(['controller' => AuthorController::class, 'middleware' => [], 'as' => 'author.', 'prefix' => 'author'], function () {
     Route::get('', 'index')->name('index');
     Route::get('{authorId}', 'show')->name('show');
 });
