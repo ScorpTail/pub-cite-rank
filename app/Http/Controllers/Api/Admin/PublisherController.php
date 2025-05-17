@@ -56,7 +56,7 @@ class PublisherController extends Controller
         $this->publisherService->delete($publisherId);
 
         return response()->json([
-            'success' => __('admin.publisher.updated'),
+            'success' => __('admin.publisher.deleted'),
         ]);
     }
 }

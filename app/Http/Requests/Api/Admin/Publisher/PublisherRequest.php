@@ -23,10 +23,10 @@ class PublisherRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'country' => ['required'],
-            'website' => ['required', 'url'],
-            'h_index' => ['required', 'integer'],
-            'openalex_id' => ['required', 'string', 'unique:publishers,openalex_id'],
+            'country' => ['sometimes'],
+            'website' => ['sometimes', 'url'],
+            'h_index' => ['sometimes'],
+            'openalex_id' => ['sometimes', 'string', 'unique:publishers,openalex_id,' . $this->route('publisherId') . ',id'],
         ];
     }
 }
