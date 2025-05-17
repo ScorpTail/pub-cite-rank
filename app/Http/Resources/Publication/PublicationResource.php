@@ -16,6 +16,7 @@ class PublicationResource extends JsonResource
     {
         $code = strtolower($this->publisher->country);
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'authors' => $this->authors()->orderBy('author_position', 'asc')->get()->map(function ($author) {
                 return [
