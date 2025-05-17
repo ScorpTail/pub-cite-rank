@@ -22,6 +22,8 @@ class IndexAuthorResource extends JsonResource
             'orcid' => $this->orcid,
             'affiliation' => $this->affiliation,
             'rank' => $this->rank,
+            'openalex_id' => $this->openalex_id,
+            'created_at' => $this->created_at,
         ];
     }
 }

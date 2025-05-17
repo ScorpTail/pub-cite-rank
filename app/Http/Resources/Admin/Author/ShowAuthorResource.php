@@ -25,6 +25,7 @@ class ShowAuthorResource extends JsonResource
             'orcid' => $this->orcid,
             'affiliation' => $this->affiliation,
             'openalex_id' => $this->openalex_id,
+            'created_at' => $this->created_at,
             'rank' => $this->rank,
             'publications' => $this->publications
         ];
