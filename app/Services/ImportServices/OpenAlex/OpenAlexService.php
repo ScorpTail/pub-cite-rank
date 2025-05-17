@@ -5,7 +5,6 @@ namespace App\Services\ImportServices\OpenAlex;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\Publisher;
-use App\Models\AuthorRank;
 use App\Models\Publication;
 use Illuminate\Support\Str;
 use App\Exceptions\ImportException;
@@ -68,7 +67,7 @@ class OpenAlexService
         $response = $this->request('works', [
             'filter' => 'host_venue.publisher.id:P' . $openalexPublisherId,
             'sort' => 'cited_by_count:desc',
-            'per_page' => 20,
+            'per_page' => 50,
             'page' => 1,
         ]);
 
@@ -139,9 +138,9 @@ class OpenAlexService
             if (!empty($work['concepts'])) {
                 foreach ($work['concepts'] as $concept) {
                     $conceptId = Str::after($concept['id'], 'https://openalex.org/C');
-                    $fullConcept = $this->request('concepts/C' . $conceptId);
-                    $name = $fullConcept->json('international.display_name.' . app()->getLocale(), $concept['display_name'] ?? null);
-                    // $name = $concept['display_name'] ?? null;
+                    // $fullConcept = $this->request('concepts/C' . $conceptId);
+                    // $name = $fullConcept->json('international.display_name.' . app()->getLocale(), $concept['display_name'] ?? null);
+                    $name = $concept['display_name'] ?? null;
                     $level = $concept['level'] ?? null;
 
                     $parentId = null;

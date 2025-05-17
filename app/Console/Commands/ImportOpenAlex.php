@@ -26,6 +26,7 @@ class ImportOpenAlex extends Command
      */
     public function handle()
     {
+        // dd(hash('sha256', 123));
         $start = microtime(true);
         $this->info('Syncing publications...');
 

@@ -17,17 +17,17 @@ class PublicationController extends Controller
         $query = Publication::query();
 
         if ($request->has('published_at')) {
-            $query->where('published_at', '>=', $request->input('published_at'));
+            $query->where('publications.published_at', '>=', $request->input('published_at'));
         }
 
         if ($request->has('category_id')) {
             $query->whereHas('categories', function ($q) use ($request) {
-                $q->where('id', $request->input('category_id'));
+                $q->where('categories.id', $request->input('category_id'));
             });
         }
 
         if ($request->has('publisher_id')) {
-            $query->where('publisher_id', $request->input('publisher_id'));
+            $query->where('publications.publisher_id', $request->input('publisher_id'));
         }
 
         $publications = $query->paginate(15);

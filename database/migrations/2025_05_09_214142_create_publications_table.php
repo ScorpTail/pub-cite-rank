@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('title')->nullable();
-            $table->dateTime('published_at')->nullable();
+            $table->date('published_at')->nullable();
             $table->unsignedBigInteger('publisher_id')->index()->nullable();
             $table->unsignedBigInteger('citation_count')->nullable();
             $table->string('doi')->index()->nullable();
