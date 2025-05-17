@@ -53,7 +53,7 @@ class AuthorController extends Controller
         ]);
     }
 
-    public function delete(string $authorId)
+    public function destroy(string $authorId)
     {
         $this->authorService->delete($authorId);
 

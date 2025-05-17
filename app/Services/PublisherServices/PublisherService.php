@@ -10,18 +10,18 @@ class PublisherService
     public function publisher(array $param = [], ?int $publisherId = null)
     {
         return $publisherId
-            ? $this->getJournal($publisherId)
-            : $this->getJournals();
+            ? $this->getPublisher($publisherId)
+            : $this->getPublishers();
     }
 
-    public function getJournals(array $param = [])
+    public function getPublishers(array $param = [])
     {
         $query = Publisher::query();
 
         return $query->get();
     }
 
-    public function getJournal(int $publisherId, array $param = [])
+    public function getPublisher(int $publisherId, array $param = [])
     {
         $query = Publisher::query();
 

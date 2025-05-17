@@ -1,12 +1,13 @@
 <?php
 
+use App\Models\Publisher;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\AuthorController;
-use App\Http\Controllers\Api\Admin\JournalController;
-use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\WeightController;
+use App\Http\Controllers\Api\Admin\CategoryController;
+use App\Http\Controllers\Api\Admin\PublisherController;
 
 Route::group(['controller' => UserController::class, 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('', 'index')->name('index');
@@ -40,12 +41,12 @@ Route::group(['controller' => AuthorController::class, 'prefix' => 'author', 'as
     Route::delete('/{authorId}', 'destroy')->name('destroy');
 });
 
-Route::group(['controller' => JournalController::class, 'prefix' => 'journal', 'as' => 'journal.'], function () {
+Route::group(['controller' => PublisherController::class, 'prefix' => 'publisher', 'as' => 'publisher.'], function () {
     Route::get('', 'index')->name('index');
-    Route::get('/{journalId}', 'show')->name('show');
+    Route::get('/{publisherId}', 'show')->name('show');
     Route::post('/', 'store')->name('store');
-    Route::put('/{journalId}', 'update')->name('update');
-    Route::delete('/{journalId}', 'destroy')->name('destroy');
+    Route::put('/{publisherId}', 'update')->name('update');
+    Route::delete('/{publisherId}', 'destroy')->name('destroy');
 });
 
 Route::group(['controller' => WeightController::class, 'prefix' => 'weight', 'as' => 'weight.'], function () {

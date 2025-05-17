@@ -51,7 +51,7 @@ class PublisherController extends Controller
         ]);
     }
 
-    public function delete(string $publisherId)
+    public function destroy(string $publisherId)
     {
         $this->publisherService->delete($publisherId);
 

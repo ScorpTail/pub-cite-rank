@@ -18,19 +18,19 @@ class WeightController extends Controller
      */
     public function index(Request $request)
     {
-        $journals = $this->weightService->weight($request->query());
+        $weights = $this->weightService->weight($request->query());
 
-        return IndexWeightResource::collection($journals);
+        return IndexWeightResource::collection($weights);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, int $journalId)
+    public function show(Request $request, int $weightId)
     {
-        $journal = $this->weightService->weight($request->query(), $journalId);
+        $weight = $this->weightService->weight($request->query(), $weightId);
 
-        return ShowWeightResource::make($journal);
+        return ShowWeightResource::make($weight);
     }
 
     public function store(WeightRequest $request)
@@ -42,18 +42,18 @@ class WeightController extends Controller
         ]);
     }
 
-    public function update(WeightRequest $request, string $journalId)
+    public function update(WeightRequest $request, string $weightId)
     {
-        $this->weightService->update($journalId, $request->validated());
+        $this->weightService->update($weightId, $request->validated());
 
         return response()->json([
             'success' => __('admin.weight.updated'),
         ]);
     }
 
-    public function delete(string $authorId)
+    public function destroy(string $weightId)
     {
-        $this->weightService->delete($authorId);
+        $this->weightService->delete($weightId);
 
         return response()->json([
             'success' => __('admin.weight.updated'),
