@@ -26,7 +26,7 @@ class PublisherRequest extends FormRequest
             'country' => ['sometimes'],
             'website' => ['sometimes', 'url'],
             'h_index' => ['sometimes'],
-            'openalex_id' => ['sometimes', 'string', 'unique:publishers,openalex_id,' . $this->route('publisherId') . ',id'],
+            'openalex_id' => ['sometimes', 'unique:publishers,openalex_id,' . $this->route('publisherId') . ',id'],
         ];
     }
 }
