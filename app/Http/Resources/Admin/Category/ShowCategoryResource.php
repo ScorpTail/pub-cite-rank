@@ -15,14 +15,21 @@ class ShowCategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $categories = Category::get('id', 'name')->pluck('name', 'id');
+        $categories = Category::get(['id', 'name'])->pluck('name', 'id');
 
         return [
             'id' => $this->id,
             'name' => $this->name,
             'parent_id' => $this->parent_id,
+            'openalex_concept_id' => $this->openalex_concept_id,
+            'level' => $this->level,
+            'publications_count' => $this->whenLoaded('publications', function () {
+                return $this->publications->count();
+            }),
             'categories' => $categories,
             'created_at' => $this->created_at,
+
+            'hierarchy' => $this->getHierarchy()
         ];
     }
 }
