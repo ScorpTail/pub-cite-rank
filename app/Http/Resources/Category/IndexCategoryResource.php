@@ -17,9 +17,7 @@ class IndexCategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'publications_count' => $this->whenLoaded('publications', function () {
-                return $this->publications->count();
-            }),
+            'publications_count' => $this->publications->count(),
         ];
     }
 }
