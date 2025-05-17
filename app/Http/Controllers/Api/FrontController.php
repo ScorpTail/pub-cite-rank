@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Author;
+use App\Models\Category;
+use App\Enums\StatusEnum;
+use App\Models\Publisher;
+use App\Models\AuthorRank;
+use App\Models\Publication;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Front\SearchCollection;
+use App\Http\Resources\Api\Admin\StatisticCollection;
 
 class FrontController extends Controller
 {
@@ -18,5 +25,20 @@ class FrontController extends Controller
         $searchResults = $query->get();
 
         return SearchCollection::make($searchResults);
+    }
+
+    public function statistic(Request $request)
+    {
+        $statistic = [
+            'total_users' => User::where('status', StatusEnum::ACTIVE)->count(),
+            'total_publications' => Publication::count(),
+            'total_publishers' => Publisher::count(),
+            'total_authors' => Author::count(),
+            'total_categories' => Category::count(),
+            'average_h_index' => AuthorRank::where('h_index', '!=', null)->avg('h_index'),
+            'max_h_index' => AuthorRank::where('h_index', '!=', null)->max('h_index'),
+        ];
+
+        return StatisticCollection::make($statistic);
     }
 }

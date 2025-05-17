@@ -9,8 +9,8 @@ use App\Models\AuthorRank;
 use App\Models\Publication;
 use Illuminate\Support\Str;
 use App\Exceptions\ImportException;
-use App\Services\AuthorRankService\AuthorRankService;
 use Illuminate\Support\Facades\Http;
+use App\Services\AuthorRankServices\AuthorRankService;
 
 class OpenAlexService
 {
@@ -125,26 +125,6 @@ class OpenAlexService
                             'affiliation' => $affiliation,
                         ]
                     );
-
-                    // $stats = $this->request('authors/A' . $authorId)->json();
-
-                    // if ($stats) {
-                    //     $publications = $stats['works_count'] ?? 0;
-                    //     $citations = $stats['cited_by_count'] ?? 0;
-                    //     $hIndex = $stats['summary_stats']['h_index'] ?? 0;
-
-                    //     $rankScore = (0.2 * $publications) + (0.5 * sqrt($citations)) + (0.3 * $hIndex);
-
-                    //     AuthorRank::updateOrCreate(
-                    //         ['author_id' => $author->id],
-                    //         [
-                    //             'total_publications' => $publications,
-                    //             'total_citations' => $citations,
-                    //             'h_index' => $hIndex,
-                    //             'rank_score' => $rankScore,
-                    //         ]
-                    //     );
-                    // }
 
                     $publication->authors()->syncWithoutDetaching([
                         $author->id => ['author_position' => $position]

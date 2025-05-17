@@ -40,6 +40,7 @@ Route::group(['controller' => CategoryController::class, 'middleware' => [], 'as
 
 Route::group(['controller' => FrontController::class], function () {
     Route::get('search', 'search')->name('search');
+    Route::get('statistic', 'statistic')->name('statistic');
 });
 
 Route::get('call', function () {
