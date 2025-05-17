@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->can('category_create');
+        return auth()->check() && (auth()->user()->can('category_create') || auth()->user()->can('category_edit'));
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\AuthorController;
 use App\Http\Controllers\Api\Admin\WeightController;
 use App\Http\Controllers\Api\Admin\CategoryController;
+use App\Http\Controllers\Api\Admin\PublicationController;
 use App\Http\Controllers\Api\Admin\PublisherController;
 
 Route::group(['controller' => UserController::class, 'prefix' => 'user', 'as' => 'user.'], function () {
@@ -47,6 +48,14 @@ Route::group(['controller' => PublisherController::class, 'prefix' => 'publisher
     Route::post('/', 'store')->name('store');
     Route::put('/{publisherId}', 'update')->name('update');
     Route::delete('/{publisherId}', 'destroy')->name('destroy');
+});
+
+Route::group(['controller' => PublicationController::class, 'prefix' => 'publication', 'as' => 'publication.'], function () {
+    Route::get('', 'index')->name('index');
+    Route::get('/{publicationId}', 'show')->name('show');
+    Route::post('/', 'store')->name('store');
+    Route::put('/{publicationId}', 'update')->name('update');
+    Route::delete('/{publicationId}', 'destroy')->name('destroy');
 });
 
 Route::group(['controller' => WeightController::class, 'prefix' => 'weight', 'as' => 'weight.'], function () {

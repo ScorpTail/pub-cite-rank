@@ -12,7 +12,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->can('user_create');
+        return auth()->check() && (auth()->user()->can('user_create') || auth()->user()->can('user_edit'));
     }
 
     /**
@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'birth_date' => ['sometimes', 'date'],
             'email' => ['sometimes', 'email', 'max:255', 'unique:users,email,' . $this->route('userId')],
             'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
-            'role' => ['sometimes', 'string'],
+            'role' => ['sometimes', 'string', 'exists:permissions,id'],
             'status' => ['sometimes', 'string', 'in:' . StatusEnum::getColumnLikeString('value')],
         ];
     }
