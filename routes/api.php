@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\FrontController;
 
 Route::group(['controller' => AuthController::class, 'as' => 'auth.'], function () {
     Route::group(['middleware' => 'guest:sanctum'], function () {
@@ -35,6 +36,10 @@ Route::group(['controller' => AuthorController::class, 'middleware' => [], 'as' 
 Route::group(['controller' => CategoryController::class, 'middleware' => [], 'as' => 'category.', 'prefix' => 'category'], function () {
     Route::get('', 'index')->name('index');
     Route::get('{categoryId}', 'show')->name('show');
+});
+
+Route::group(['controller' => FrontController::class], function () {
+    Route::get('search', 'search')->name('search');
 });
 
 Route::get('call', function () {
