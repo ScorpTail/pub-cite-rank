@@ -30,7 +30,11 @@ class PublicationController extends Controller
     {
         $data = $request->validated();
 
-        Publication::create($data);
+        $publication = Publication::create($data);
+
+        $publication->authors()->attach($data['author_id']);
+        $publication->categories()->attach($data['category_id']);
+        $publication->publisher()->associate($data['publisher_id']);
 
         return response()->json([
             'message' => __('admin.publication.created'),
@@ -57,6 +61,16 @@ class PublicationController extends Controller
         $publication = Publication::findOrFail($publicationId);
 
         $publication->update($data);
+
+        if (isset($data['author_id'])) {
+            $publication->authors()->sync($data['author_id']);
+        }
+        if (isset($data['category_id'])) {
+            $publication->categories()->sync($data['category_id']);
+        }
+        if (isset($data['publisher_id'])) {
+            $publication->publisher()->associate($data['publisher_id']);
+        }
 
         return response()->json([
             'message' => __('admin.publication.updated'),

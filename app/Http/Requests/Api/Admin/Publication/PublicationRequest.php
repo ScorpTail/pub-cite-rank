@@ -25,6 +25,7 @@ class PublicationRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'published_at' => ['sometimes', 'date'],
             'publisher_id' => ['required', 'max:255', 'exists:publishers,id'],
+            'author_id' => ['required', 'exists:authors,id'],
             'category_id' => ['required', 'max:255', 'exists:categories,id'],
             'citation_count' => ['sometimes', 'max:255'],
             'doi' => ['sometimes', 'string', 'max:255', 'unique:publications,doi,' . $this->route('publicationId') . ',id'],
