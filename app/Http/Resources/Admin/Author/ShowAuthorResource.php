@@ -14,6 +14,19 @@ class ShowAuthorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+            'birth_date' => $this->birth_date,
+            'about' => $this->about,
+            'orcid' => $this->orcid,
+            'affiliation' => $this->affiliation,
+            'openalex_id' => $this->openalex_id,
+            'rank' => $this->rank,
+            'publications' => $this->publications
+        ];
     }
 }
