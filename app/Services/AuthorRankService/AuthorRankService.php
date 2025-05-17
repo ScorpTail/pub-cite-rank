@@ -10,7 +10,7 @@ class AuthorRankService
 {
     public function calculate(Author $author): void
     {
-        $weights = cache()->remember('weight_all', fn() => Weight::pluck('value', 'key'));
+        $weights = cache()->remember('weight_all', 60 * 60 * 24, fn() => Weight::pluck('value', 'key'));
 
         $totalPublications = $author->publications()->count();
         $totalCitations    = $author->publications()->sum('citation_count');
