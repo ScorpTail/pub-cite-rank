@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Publisher;
+use App\Http\Controllers\Api\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\UserController;
@@ -9,6 +9,10 @@ use App\Http\Controllers\Api\Admin\WeightController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\PublicationController;
 use App\Http\Controllers\Api\Admin\PublisherController;
+
+Route::group(['controller' => AdminController::class], function () {
+    Route::get('statistic', 'statistic')->name('statistic');
+});
 
 Route::group(['controller' => UserController::class, 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('', 'index')->name('index');

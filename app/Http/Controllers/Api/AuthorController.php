@@ -27,7 +27,7 @@ class AuthorController extends Controller
      */
     public function show(Request $request, int $authorId)
     {
-        $author = $this->authorService->author($authorId, $request->query());
+        $author = $this->authorService->author($request->query(), $authorId);
 
         return AuthorResource::make($author);
     }
