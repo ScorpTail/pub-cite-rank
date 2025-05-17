@@ -139,9 +139,9 @@ class OpenAlexService
             if (!empty($work['concepts'])) {
                 foreach ($work['concepts'] as $concept) {
                     $conceptId = Str::after($concept['id'], 'https://openalex.org/C');
-                    // $fullConcept = $this->request('concepts/C' . $conceptId);
-                    // $name = $fullConcept->json('international.display_name.' . app()->getLocale(), $concept['display_name'] ?? null);
-                    $name = $concept['display_name'] ?? null;
+                    $fullConcept = $this->request('concepts/C' . $conceptId);
+                    $name = $fullConcept->json('international.display_name.' . app()->getLocale(), $concept['display_name'] ?? null);
+                    // $name = $concept['display_name'] ?? null;
                     $level = $concept['level'] ?? null;
 
                     $parentId = null;

@@ -14,6 +14,12 @@ class IndexCategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [];
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'publications_count' => $this->whenLoaded('publications', function () {
+                return $this->publications->count();
+            }),
+        ];
     }
 }
