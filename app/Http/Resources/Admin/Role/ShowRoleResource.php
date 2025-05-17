@@ -15,14 +15,14 @@ class ShowRoleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $permissions = Permission::get('name');
+        $permissions = Permission::get(['id', 'name']);
 
         return [
             'id' => $this->id,
             'name' => $this->name,
             'guard_name' => $this->guard_name,
             'permissions' => $permissions,
-            'role_permissions' => $this->permissions->pluck('name'),
+            'role_permissions' => $this->permissions->pluck('name', 'id'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

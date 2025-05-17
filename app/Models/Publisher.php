@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Publisher extends Model
 {
@@ -25,4 +26,14 @@ class Publisher extends Model
         'h_index',
         'openalex_id'
     ];
+
+    /**
+     * Get all of the publications for the Publisher
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function publications(): HasMany
+    {
+        return $this->hasMany(Publication::class, 'publisher_id', 'id');
+    }
 }

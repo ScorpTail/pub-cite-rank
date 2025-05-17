@@ -27,7 +27,7 @@ class RoleService
 
         $query->where('id', $roleId);
 
-        return $query->first();
+        return $query->firstOrFail();
     }
 
     public function create(array $data)

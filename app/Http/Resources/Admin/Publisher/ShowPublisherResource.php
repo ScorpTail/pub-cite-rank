@@ -14,6 +14,14 @@ class ShowPublisherResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->name,
+            'country' => $this->country,
+            'website' => $this->website,
+            'h_index' => $this->h_index,
+            'openalex_id' => $this->openalex_id,
+            'top_publications' => $this->publications()->orderBy('citation_count', 'desc')->limit(5)->get(),
+            'created_at' => $this->created_at,
+        ];
     }
 }

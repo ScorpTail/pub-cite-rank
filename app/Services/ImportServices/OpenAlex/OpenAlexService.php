@@ -90,6 +90,7 @@ class OpenAlexService
 
             // Автори
             if (!empty($work['authorships'])) {
+                $position = 1;
                 foreach ($work['authorships'] as $authorship) {
                     $authorData = $authorship['author'] ?? [];
                     if (!isset($authorData['id'])) {
@@ -141,7 +142,10 @@ class OpenAlexService
                         );
                     }
 
-                    $publication->authors()->syncWithoutDetaching([$author->id]);
+                    $publication->authors()->syncWithoutDetaching([
+                        $author->id => ['author_position' => $position]
+                    ]);
+                    $position++;
                 }
             }
 
