@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\Weight;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -71,6 +72,13 @@ class DatabaseSeeder extends Seeder
             });
             User::find(1)->assignRole('admin');
         });
+
+        Weight::insert([
+            ['key' => 'publications', 'value' => 1],
+            ['key' => 'citations', 'value' => 1],
+            ['key' => 'h_index', 'value' => 1],
+            ['key' => 'publisher', 'value' => 1],
+        ]);
 
         Artisan::call('app:import-openalex', [
             'type' => 'publishers',
