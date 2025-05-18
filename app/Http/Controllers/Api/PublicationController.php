@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Publication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Publication\PublicationResource;
 
@@ -17,7 +18,7 @@ class PublicationController extends Controller
         $query = Publication::query();
 
         if ($request->has('published_at')) {
-            $query->where('publications.published_at', '>=', $request->input('published_at'));
+            $query->whereYear('publications.published_at', $request->input('published_at'));
         }
 
         if ($request->has('category_id')) {
