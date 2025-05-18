@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
 
-            $table->string('title')->nullable();
+            $table->text('title')->nullable();
             $table->date('published_at')->nullable();
             $table->unsignedBigInteger('publisher_id')->index()->nullable();
             $table->unsignedBigInteger('citation_count')->nullable();

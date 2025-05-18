@@ -31,6 +31,8 @@ class OptionalAuthMiddleware
             $user = $token->tokenable;
 
             if ($user) {
+                $user->load(['permissions', 'roles']);
+                cache()->forget('spatie.permission.cache');
                 auth()->setUser($user);
             }
         }
