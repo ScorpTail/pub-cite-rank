@@ -77,7 +77,7 @@ class OpenAlexService
                         ['openalex_id' => $publisherOpenalexId],
                         [
                             'name' => $publisherData['display_name'],
-                            'country' => $publisherData['country_code'] ?? null,
+                            'country' => $publisherData['country_codes'][0] ?? null,
                             'website' => $publisherData['homepage_url'] ?? null,
                             'h_index' => $publisherData['summary_stats']['h_index'] ?? null,
                         ]
