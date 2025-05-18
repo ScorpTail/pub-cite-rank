@@ -45,13 +45,25 @@ class FrontController extends Controller
 
     public function topAuthors(Request $request)
     {
-        $topAuthors = Author::select('authors.*')
-            ->join('author_ranks as ranks', 'ranks.author_id', 'authors.id')
-            ->orderBy('ranks.total_citations', 'desc')
-            ->orderBy('ranks.total_publications', 'desc')
-            ->with('rank')
-            ->take(8)
-            ->get();
+        $type = $request->input('type', 'diagram');
+
+        if ($type == 'diagram') {
+            $topAuthors = Author::select('authors.*')
+                ->join('author_ranks as ranks', 'ranks.author_id', 'authors.id')
+                ->orderBy('ranks.total_citations', 'desc')
+                ->orderBy('ranks.total_publications', 'desc')
+                ->with('rank')
+                ->take(8)
+                ->get();
+        }
+
+        if ($type == 'table') {
+            $topAuthors = Author::select('authors.*')
+                ->join('author_ranks as ranks', 'ranks.author_id', 'authors.id')
+                ->orderBy('ranks.rank_score', 'desc')
+                ->with('rank')
+                ->get();
+        }
 
         return TopAuthorCollection::make($topAuthors);
     }
