@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Front\SearchCollection;
 use App\Http\Resources\Api\Admin\StatisticCollection;
+use App\Http\Resources\Api\Front\TopAuthorCollection;
 
 class FrontController extends Controller
 {
@@ -40,5 +41,18 @@ class FrontController extends Controller
         ];
 
         return StatisticCollection::make($statistic);
+    }
+
+    public function topAuthors(Request $request)
+    {
+        $topAuthors = Author::with('rank')
+            ->whereHas('rank', function ($query) {
+                $query->orderBy('total_citations', 'desc')
+                    ->orderBy('total_publications', 'desc');
+            })
+            ->take(8)
+            ->get();
+
+        return TopAuthorCollection::make($topAuthors);
     }
 }

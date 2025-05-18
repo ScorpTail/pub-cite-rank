@@ -54,6 +54,7 @@ Route::group(['controller' => PublisherController::class, 'middleware' => [], 'a
 Route::group(['controller' => FrontController::class], function () {
     Route::get('search', 'search')->name('search');
     Route::get('statistic', 'statistic')->name('statistic');
+    Route::get('top-authors', 'topAuthors')->name('topAuthors');
 });
 
 Route::get('call', function () {
