@@ -45,11 +45,11 @@ class FrontController extends Controller
 
     public function topAuthors(Request $request)
     {
-        $topAuthors = Author::with('rank')
-            ->whereHas('rank', function ($query) {
-                $query->orderBy('total_citations', 'desc')
-                    ->orderBy('total_publications', 'desc');
-            })
+        $topAuthors = Author::select('authors.*')
+            ->join('author_ranks as ranks', 'ranks.author_id', 'authors.id')
+            ->orderBy('ranks.total_citations', 'desc')
+            ->orderBy('ranks.total_publications', 'desc')
+            ->with('rank')
             ->take(8)
             ->get();
 
