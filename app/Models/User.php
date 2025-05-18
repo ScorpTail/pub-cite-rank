@@ -5,16 +5,24 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Traits\ImageTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasPermissions;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, HasApiTokens, ImageTrait;
+    use HasFactory, Notifiable, HasRoles, HasPermissions, HasApiTokens, ImageTrait;
+
+    protected string $guard_name = 'web';
+
+    protected function getDefaultGuardName(): string
+    {
+        return $this->guard_name;
+    }
 
     /**
      * The attributes that are mass assignable.

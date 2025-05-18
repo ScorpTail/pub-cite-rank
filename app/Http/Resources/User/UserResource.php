@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'full_name' => $this->full_name,
             'email' => $this->email,
             'avatar' => $this->mainImage?->full_path,
-            'is_admin' => auth()->user()->can('admin_panel')
+            'is_admin' => auth()->user()->can('admin_panel', 'api')
         ];
     }
 }
