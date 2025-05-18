@@ -13,8 +13,7 @@ use App\Services\AuthorRankServices\AuthorRankService;
 
 class OpenAlexService
 {
-    public function __construct(protected AuthorRankService $authorRankService) {
-    }
+    public function __construct(protected AuthorRankService $authorRankService) {}
 
     public function import(string $type = 'publishers')
     {
@@ -36,7 +35,7 @@ class OpenAlexService
     {
         $response = $this->request('publishers', [
             'page' => 1,
-            'per_page' => 50,
+            'per_page' => 5,
         ]);
 
         if ($response->failed()) {
@@ -67,7 +66,7 @@ class OpenAlexService
         $response = $this->request('works', [
             'filter' => 'host_venue.publisher.id:P' . $openalexPublisherId,
             'sort' => 'cited_by_count:desc',
-            'per_page' => 50,
+            'per_page' => 200,
             'page' => 1,
         ]);
 
