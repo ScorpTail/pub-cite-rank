@@ -14,8 +14,7 @@ class PublicationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $code = strtolower($this->publisher->country);
-        return [
+        $res = [
             'id' => $this->id,
             'title' => $this->title,
             'authors' => $this->authors()->orderBy('author_position', 'asc')->get()->map(function ($author) {
@@ -32,11 +31,19 @@ class PublicationResource extends JsonResource
             }),
             'published_at' => $this->published_at,
             'publisher_id' => $this->publisher_id,
-            'publisher_name' => $this->publisher->name,
-            'publisher_country' => "https://flagcdn.com/48x36/{$code}.png",
+
             'citation_count' => $this->citation_count,
             'doi' => $this->doi,
             'openalex_id' => 'https://openalex.org/concepts/C' . $this->openalex_id,
         ];
+
+        if ($this->publisher) {
+            $code = strtolower($this->publisher->country);
+
+            $res['publisher_name'] =  $this->publisher->name;
+            $res['publisher_country'] = "https://flagcdn.com/48x36/{$code}.png";
+        }
+
+        return $res;
     }
 }
