@@ -18,6 +18,10 @@ class RoleService
     {
         $query = Role::query();
 
+        if (isset($param['name'])) {
+            $query->where('name', 'like', '%' . $param['name'] . '%');
+        }
+
         return $query->paginate(15);
     }
 

@@ -18,6 +18,10 @@ class PublicationController extends Controller
     {
         $query = Publication::query();
 
+        if ($request->filled('title')) {
+            $query->where('title', 'like', '%' . $request->input('title') . '%');
+        }
+
         $publications = $query->paginate($request->input('per_page', 15));
 
         return IndexPublicationResource::collection($publications);

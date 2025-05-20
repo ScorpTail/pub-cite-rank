@@ -11,12 +11,18 @@ class AuthorService
     {
         return $authorId
             ? $this->getAuthor($authorId)
-            : $this->getAuthors();
+            : $this->getAuthors($param);
     }
 
     public function getAuthors(array $param = [])
     {
         $query = Author::query();
+
+        if (isset($param['name'])) {
+            $query->where('first_name', 'like', '%' . $param['name'] . '%')
+                ->orWhere('middle_name', 'like', '%' . $param['name'] . '%')
+                ->orWhere('last_name', 'like', '%' . $param['name'] . '%');
+        }
 
         return $query->paginate(15);
     }

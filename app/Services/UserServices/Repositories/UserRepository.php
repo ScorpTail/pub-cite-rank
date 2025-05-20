@@ -11,6 +11,12 @@ class UserRepository
     {
         $query = User::query();
 
+        if (isset($param['name'])) {
+            $query->where('first_name', 'like', '%' . $param['name'] . '%')
+                ->orWhere('middle_name', 'like', '%' . $param['name'] . '%')
+                ->orWhere('last_name', 'like', '%' . $param['name'] . '%');
+        }
+
         return $query->paginate(15);
     }
 

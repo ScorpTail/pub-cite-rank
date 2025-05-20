@@ -11,12 +11,16 @@ class PublisherService
     {
         return $publisherId
             ? $this->getPublisher($publisherId)
-            : $this->getPublishers();
+            : $this->getPublishers($param);
     }
 
     public function getPublishers(array $param = [])
     {
         $query = Publisher::query();
+
+        if (isset($param['name'])) {
+            $query->where('name', 'like', '%' . $param['search'] . '%');
+        }
 
         return $query->paginate(15);
     }
