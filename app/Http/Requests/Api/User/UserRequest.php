@@ -30,4 +30,11 @@ class UserRequest extends FormRequest
             'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $filtered = array_filter($this->all());
+
+        $this->replace($filtered);
+    }
 }

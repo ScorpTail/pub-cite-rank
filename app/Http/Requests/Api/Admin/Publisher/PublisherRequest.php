@@ -29,4 +29,11 @@ class PublisherRequest extends FormRequest
             'openalex_id' => ['sometimes', 'unique:publishers,openalex_id,' . $this->route('publisherId') . ',id'],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $filtered = array_filter($this->all());
+
+        $this->replace($filtered);
+    }
 }

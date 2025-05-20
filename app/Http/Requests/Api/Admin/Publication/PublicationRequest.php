@@ -32,4 +32,11 @@ class PublicationRequest extends FormRequest
             'openalex_id' => ['sometimes', 'unique:publications,openalex_id,' . $this->route('publicationId') . ',id'],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $filtered = array_filter($this->all());
+
+        $this->replace($filtered);
+    }
 }

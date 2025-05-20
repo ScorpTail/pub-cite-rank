@@ -30,4 +30,11 @@ class AuthorRequest extends FormRequest
             'affiliation' => ['sometimes', 'string'],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $filtered = array_filter($this->all());
+
+        $this->replace($filtered);
+    }
 }

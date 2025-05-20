@@ -27,4 +27,11 @@ class CategoryRequest extends FormRequest
             'openalex_concept_id' => ['nullable', 'max:255'],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $filtered = array_filter($this->all());
+
+        $this->replace($filtered);
+    }
 }

@@ -26,4 +26,11 @@ class WeightRequest extends FormRequest
             'value' => ['required', 'string', 'max:255'],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $filtered = array_filter($this->all());
+
+        $this->replace($filtered);
+    }
 }

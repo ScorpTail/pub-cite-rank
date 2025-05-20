@@ -33,4 +33,11 @@ class UserRequest extends FormRequest
             'status' => ['sometimes', 'string', 'in:' . StatusEnum::getColumnLikeString('value')],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $filtered = array_filter($this->all());
+
+        $this->replace($filtered);
+    }
 }
