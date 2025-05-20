@@ -11,7 +11,7 @@ class PublicationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && (auth()->user()->can('publish_create') || auth()->user()->can('publish_edit'));
+        return auth()->check() && (auth()->user()->can('publish_create', 'api') || auth()->user()->can('publish_edit', 'api'));
     }
 
     /**

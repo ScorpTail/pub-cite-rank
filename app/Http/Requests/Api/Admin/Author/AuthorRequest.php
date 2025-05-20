@@ -11,7 +11,7 @@ class AuthorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && (auth()->user()->can('author_create') || auth()->user()->can('author_edit'));
+        return auth()->check() && (auth()->user()->can('author_create', 'api') || auth()->user()->can('author_edit', 'api'));
     }
 
     /**

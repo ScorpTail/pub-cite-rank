@@ -9,6 +9,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -70,7 +71,6 @@ class DatabaseSeeder extends Seeder
             DB::table('permissions')->whereIn('name', data_get($createPermissions, '*.name'))->get()->each(function ($permission) use ($admin) {
                 DB::table('role_has_permissions')->insert(['permission_id' => $permission->id, 'role_id' => $admin->id]);
             });
-            User::find(1)->assignRole('admin');
         });
 
         Weight::insert([
@@ -78,6 +78,14 @@ class DatabaseSeeder extends Seeder
             ['key' => 'citations', 'value' => 1],
             ['key' => 'h_index', 'value' => 1],
             ['key' => 'publisher', 'value' => 1],
+        ]);
+
+        $user = User::where('email', 'test@gmail.com')->first();
+
+        DB::table('model_has_roles')->insert([
+            'role_id' => Role::where('name', 'admin')->first()?->id,
+            'model_type' => 'App\Models\User',
+            'model_id' => $user->id,
         ]);
 
         Artisan::call('app:import-openalex', [

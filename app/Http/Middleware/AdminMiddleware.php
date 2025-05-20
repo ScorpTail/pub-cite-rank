@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         cache()->forget('spatie.permission.cache');
-        if (!auth()->check() || !auth()->user()->can('admin_panel')) {
+        if (!auth()->check() || !auth()->user()->can('admin_panel', 'api')) {
             abort(403, 'Unauthorized action.');
         }
 

@@ -11,7 +11,7 @@ class WeightRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && (auth()->user()->can('weight_create') || auth()->user()->can('weight_edit'));
+        return auth()->check() && (auth()->user()->can('weight_create', 'api') || auth()->user()->can('weight_edit', 'api'));
     }
 
     /**

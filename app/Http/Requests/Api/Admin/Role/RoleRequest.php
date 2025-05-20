@@ -11,7 +11,7 @@ class RoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && (auth()->user()->can('role_create') || auth()->user()->can('role_edit'));
+        return auth()->check() && (auth()->user()->can('role_create', 'api') || auth()->user()->can('role_edit', 'api'));
     }
 
     /**
