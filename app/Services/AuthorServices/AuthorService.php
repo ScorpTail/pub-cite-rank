@@ -18,7 +18,7 @@ class AuthorService
     {
         $query = Author::query();
 
-        return $query->get();
+        return $query->paginate(15);
     }
 
     public function getAuthor(int $authorId, array $param = [])

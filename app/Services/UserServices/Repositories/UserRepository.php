@@ -11,7 +11,7 @@ class UserRepository
     {
         $query = User::query();
 
-        return $query->get();
+        return $query->paginate(15);
     }
 
     public function getUser(int $userId, array $param = [])

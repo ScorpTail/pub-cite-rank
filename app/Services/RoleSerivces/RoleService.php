@@ -18,7 +18,7 @@ class RoleService
     {
         $query = Role::query();
 
-        return $query->get();
+        return $query->paginate(15);
     }
 
     private function getRole(int $roleId, array $param = [])

@@ -18,7 +18,7 @@ class WeightService
     {
         $query = Weight::query();
 
-        return $query->get();
+        return $query->paginate(15);
     }
 
     public function getWeight(int $weightId, array $param = [])

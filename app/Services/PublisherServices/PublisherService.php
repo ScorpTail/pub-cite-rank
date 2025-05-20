@@ -18,7 +18,7 @@ class PublisherService
     {
         $query = Publisher::query();
 
-        return $query->get();
+        return $query->paginate(15);
     }
 
     public function getPublisher(int $publisherId, array $param = [])

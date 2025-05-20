@@ -18,7 +18,7 @@ class CategoryService
     {
         $query = Category::query();
 
-        return $query->get();
+        return $query->paginate(15);
     }
 
     private function getCategory(int $categoryId, array $param = [])

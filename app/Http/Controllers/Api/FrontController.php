@@ -62,7 +62,7 @@ class FrontController extends Controller
                 ->join('author_ranks as ranks', 'ranks.author_id', 'authors.id')
                 ->orderBy('ranks.rank_score', 'desc')
                 ->with('rank')
-                ->get();
+                ->paginate();
         }
 
         return TopAuthorCollection::make($topAuthors);
