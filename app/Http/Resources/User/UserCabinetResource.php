@@ -23,6 +23,7 @@ class UserCabinetResource extends JsonResource
             'created_at' => $this->created_at,
             'email' => $this->email,
             'avatar' => $this->mainImage?->full_path,
+            'status' => $this->status,
         ];
     }
 }
