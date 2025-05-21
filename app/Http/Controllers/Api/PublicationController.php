@@ -31,6 +31,10 @@ class PublicationController extends Controller
             $query->where('publications.publisher_id', $request->input('publisher_id'));
         }
 
+        if ($request->has('title')) {
+            $query->where('publications.title', 'like', '%' . $request->input('title') . '%');
+        }
+
         $publications = $query->paginate(15);
 
         return PublicationResource::collection($publications);
