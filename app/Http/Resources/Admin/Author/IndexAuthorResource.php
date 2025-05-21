@@ -18,6 +18,8 @@ class IndexAuthorResource extends JsonResource
             'id' => $this->id,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
+            'birth_date' => $this->birth_date,
+            'about' => $this->about,
             'last_name' => $this->last_name,
             'orcid' => $this->orcid,
             'affiliation' => $this->affiliation,
