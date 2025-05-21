@@ -14,6 +14,16 @@ class PublisherResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'country' => $this->country,
+            'website' => $this->website,
+            'h_index' => $this->h_index,
+            'openalex_id' => $this->openalex_id,
+            'created_at' => $this->created_at,
+            'total_publications' => $this->publications()->count(),
+            'total_authors' => $this->publications()->with('authors')->get()->pluck('authors')->flatten()->unique('id')->count(),
+        ];
     }
 }
