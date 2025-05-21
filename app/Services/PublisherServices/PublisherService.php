@@ -19,7 +19,7 @@ class PublisherService
         $query = Publisher::query();
 
         if (isset($param['name'])) {
-            $query->where('name', 'like', '%' . $param['search'] . '%');
+            $query->where('name', 'like', '%' . $param['name'] . '%');
         }
 
         return $query->paginate(15);
